@@ -43,8 +43,8 @@ services:
       - "7687:7687"  # Bolt protocol
     volumes:
       - neo4j_data:/data
-    networks:
-      - app_network
+    # networks:
+    #   - app_network
 
   # minio:
   #   image: minio/minio:latest
