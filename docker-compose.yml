@@ -25,8 +25,8 @@ services:
       - "6379:6379"
     volumes:
       - redis_data:/data
-    networks:
-      - app_network
+    # networks:
+    #   - app_network
 
   # neo4j:
   #   image: neo4j:5.13
@@ -86,6 +86,6 @@ volumes:
   minio_data:
   postgres_data:
 
-networks:
-  app_network:
-    driver: overlay  # Required for Swarm multi-node networking
+# networks:
+#   app_network:
+#     driver: overlay  # Required for Swarm multi-node networking
