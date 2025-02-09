@@ -86,6 +86,6 @@ volumes:
   minio_data:
   postgres_data:
 
-# networks:
-#   app_network:
-#     driver: overlay  # Required for Swarm multi-node networking
+networks:
+  app_network:
+    driver: overlay  # Required for Swarm multi-node networking
