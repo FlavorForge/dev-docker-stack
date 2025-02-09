@@ -28,23 +28,23 @@ services:
     # networks:
     #   - app_network
 
-  # neo4j:
-  #   image: neo4j:5.13
-  #   deploy:
-  #     mode: replicated
-  #     replicas: 2  # Two Neo4j instances
-  #   environment:
-  #     - NEO4J_AUTH=${NEO4J_USER}/${NEO4J_PASSWORD}
-  #     - NEO4J_dbms_memory_pagecache_size=512M
-  #     - NEO4J_dbms_memory_heap_initial__size=512M
-  #     - NEO4J_dbms_memory_heap_max__size=1024M
-  #   ports:
-  #     - "7474:7474"  # Browser UI
-  #     - "7687:7687"  # Bolt protocol
-  #   volumes:
-  #     - neo4j_data:/data
-  #   networks:
-  #     - app_network
+  neo4j:
+    image: neo4j:5.13
+    deploy:
+      mode: replicated
+      replicas: 2  # Two Neo4j instances
+    environment:
+      - NEO4J_AUTH=${NEO4J_USER}/${NEO4J_PASSWORD}
+      - NEO4J_dbms_memory_pagecache_size=512M
+      - NEO4J_dbms_memory_heap_initial__size=512M
+      - NEO4J_dbms_memory_heap_max__size=1024M
+    ports:
+      - "7474:7474"  # Browser UI
+      - "7687:7687"  # Bolt protocol
+    volumes:
+      - neo4j_data:/data
+    networks:
+      - app_network
 
   # minio:
   #   image: minio/minio:latest
