@@ -30,9 +30,9 @@ services:
 
   neo4j:
     image: neo4j:5.13
-    deploy:
-      mode: replicated
-      replicas: 2  # Two Neo4j instances
+    # deploy:
+    #   mode: replicated
+    #   replicas: 2  # Two Neo4j instances
     environment:
       - NEO4J_AUTH=${NEO4J_USER}/${NEO4J_PASSWORD}
       - NEO4J_dbms_memory_pagecache_size=512M
