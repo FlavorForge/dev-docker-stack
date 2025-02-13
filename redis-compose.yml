@@ -9,7 +9,7 @@ services:
     volumes:
       - redisinsight_data:/db
     networks:
-      app_network
+      - app_network
     depends_on:
       - redis
   
