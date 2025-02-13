@@ -41,6 +41,8 @@ services:
       - redisinsight_data:/db
     depends_on:
       - redis
+    networks:
+      - app_network
   
   redis:
     image: redis:latest
