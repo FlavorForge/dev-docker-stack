@@ -23,7 +23,7 @@ services:
     #   replicas: 1
     environment:
       - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSD}
+      - POSTGRES_PASSWORD=${POSTGRES_PASS}
       - POSTGRES_DB=${POSTGRES_DB}
     ports:
       - "5432:5432"
