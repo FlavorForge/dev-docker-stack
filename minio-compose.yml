@@ -1,0 +1,43 @@
+services:
+  
+  # MinIO Content
+  
+  # minio_console:
+  #   image: minio/minio:latest
+  #   environment:
+  #     - MINIO_ROOT_USER=${MINIO_USER}
+  #     - MINIO_ROOT_PASSWORD=${MINIO_PASSWORD}
+  #   command: server /data --console-address ":9001"
+  #   ports:
+  #     - "9002:9001"
+  #   depends_on:
+  #     - minio
+  #   networks:
+  #     - app_network
+
+
+  minio:
+    image: minio/minio:latest
+    # deploy:
+    #   mode: replicated
+    #   replicas: 1
+    environment:
+      - MINIO_ROOT_USER=${MINIO_USER}
+      - MINIO_ROOT_PASSWORD=${MINIO_PASS}
+      - MINIO_BROWSER=off
+    ports:
+      - "9000:9000"
+      - "9002:9001"
+    command: server /data --console-address ":9001"
+    volumes:
+      - minio_data:/data
+    networks:
+      - app_network
+
+
+volumes:
+  minio_data:
+
+networks:
+  app_network:
+    driver: bridge
