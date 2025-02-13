@@ -8,6 +8,8 @@ services:
       - "8001:8001"
     volumes:
       - redisinsight_data:/db
+    networks:
+      app_network
     depends_on:
       - redis
   
@@ -20,7 +22,7 @@ services:
     volumes:
       - redis_data:/data
     environment:
-      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - REDIS_PASSWORD=${REDIS_PASS}
     networks:
       - app_network
 
