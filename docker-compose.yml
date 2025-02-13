@@ -10,29 +10,33 @@ services:
     environment:
       - discovery.type=single-node
       - ES_JAVA_OPTS=${ES_JAVA_OPTS}
+      - xpack.security.enabled=true
+      - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
     ports:
       - "9200:9200"
     volumes:
       - elasticsearch_data:/usr/share/elasticsearch/data
-  #   networks:
-  #     - app_network
+    networks:
+      - app_network
 
   redis:
     image: redis:latest
     deploy:
-      mode: global  # Runs on all nodes
+      mode: global
     ports:
       - "6379:6379"
     volumes:
       - redis_data:/data
-    # networks:
-    #   - app_network
+    environment:
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+    networks:
+      - app_network
 
   neo4j:
     image: neo4j:5.13
     # deploy:
     #   mode: replicated
-    #   replicas: 2  # Two Neo4j instances
+    #   replicas: 2
     environment:
       - NEO4J_AUTH=${NEO4J_USER}/${NEO4J_PASSWORD}
       - NEO4J_dbms_memory_pagecache_size=512M
@@ -43,14 +47,14 @@ services:
       - "7687:7687"  # Bolt protocol
     volumes:
       - neo4j_data:/data
-    # networks:
-    #   - app_network
+    networks:
+      - app_network
 
   minio:
     image: minio/minio:latest
     # deploy:
     #   mode: replicated
-    #   replicas: 1  # MinIO should run on a single node for consistency
+    #   replicas: 1
     environment:
       - MINIO_ROOT_USER=${MINIO_USER}
       - MINIO_ROOT_PASSWORD=${MINIO_PASSWORD}
@@ -60,14 +64,28 @@ services:
     command: server /data --console-address ":9001"
     volumes:
       - minio_data:/data
-    # networks:
-    #   - app_network
-
+    environment:
+      - MINIO_ROOT_USER=${MINIO_USER}
+      - MINIO_ROOT_PASSWORD=${MINIO_PASSWORD}
+      - MINIO_BROWSER=off
+    networks:
+      - app_network
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_PASSWORD}
+    ports:
+      - "5050:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      - postgres
   postgres:
     image: postgres:latest
     # deploy:
     #   mode: replicated
-    #   replicas: 1  # For consistency, unless we use PostgreSQL replication
+    #   replicas: 1
     environment:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
@@ -76,8 +94,8 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    # networks:
-    #   - app_network
+    networks:
+      - app_network
 
 volumes:
   elasticsearch_data:
@@ -85,7 +103,6 @@ volumes:
   neo4j_data:
   minio_data:
   postgres_data:
-
-# networks:
-#   app_network:
-#     driver: overlay  # Required for Swarm multi-node networking
+networks:
+  app_network:
+    driver: bridge
