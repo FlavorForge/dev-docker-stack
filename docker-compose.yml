@@ -33,14 +33,14 @@ services:
       
   # Redis Content
   
-  # redis_insight:
-  #   image: redislabs/redisinsight:latest
-  #   ports:
-  #     - "8001:8001"
-  #   volumes:
-  #     - redisinsight_data:/db
-  #   depends_on:
-  #     - redis
+  redis_insight:
+    image: redislabs/redisinsight:latest
+    ports:
+      - "8001:8001"
+    volumes:
+      - redisinsight_data:/db
+    depends_on:
+      - redis
   
   redis:
     image: redis:latest
