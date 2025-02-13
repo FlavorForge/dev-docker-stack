@@ -34,7 +34,7 @@ services:
   # Redis Content
   
   redis_insight:
-    image: redislabs/redisinsight:latest
+    image: redis/redisinsight:latest
     ports:
       - "8001:8001"
     volumes:
